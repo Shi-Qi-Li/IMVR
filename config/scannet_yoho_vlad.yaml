@@ -1,0 +1,30 @@
+experiment_name: scannet_yoho
+data_path: &data_path data/scannet
+
+seed: 3407
+
+model:
+  name: IMVR
+  descriptor: yoho
+  overlap_cfg:
+    name: NetVLADPredictor
+    drop_ratio: 0.3
+    vlad_cfg:
+      num_clusters: 64
+      dim: 32
+      alpha: 10.0
+      normalize_input: True
+      intra_normalization: True 
+      l2_normalization: True
+    refine_k: 3
+    beta: 0.5
+    mode: overlap
+  sample: 5000
+  k: 10
+  ird: 0.07
+  merge_method: sample
+  ckpt_path: ckpt/netvlad_yoho.pth
+
+info:
+  err2: 0.2
+  ecdf: True

@@ -1,0 +1,77 @@
+experiment_name: netvlad_fcgf
+data_path: &data_path data
+epoch: &epoch 1
+seed: 3407
+
+dataloader:
+  num_workers: &num_workers 0
+  train_loader:
+    num_workers: *num_workers
+    batch_size: 1
+  val_loader:
+    num_workers: *num_workers
+    batch_size: 1
+  test_loader:
+    num_workers: *num_workers
+    batch_size: 1
+
+dataset:
+  name: &dataset_name Cache
+  train_set:
+    name: *dataset_name
+    data_path: *data_path
+    cache_folder: vlad_fcgf_cache
+    split: train
+    total_epoch: 300
+  val_set:
+    name: Scene
+    data_path: *data_path
+    split: val
+    descriptor: fcgf
+    ird: 0.07
+    point_sample: False
+    frame_sample: False
+    overlap_only: True
+    processes: 6
+  test_set:
+    name: Scene
+    data_path: *data_path
+    split: 3dmatch
+    descriptor: fcgf
+    ird: 0.07
+    point_sample: False
+    frame_sample: False
+    overlap_only: True
+    processes: 6
+
+model:
+  name: NetVLADPredictor
+  drop_ratio: 0.3
+  vlad_cfg:
+    num_clusters: 64
+    dim: 32
+    alpha: 10.0
+    normalize_input: True
+    intra_normalization: True 
+    l2_normalization: True
+  refine_k: 3
+  beta: 0.5
+  mode: overlap
+
+loss:
+  name: OverlapLoss
+
+optimizer:
+  name: Adam
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+
+lr_scheduler:
+  name: Cosine_Schedule_With_Warmup
+  num_warmup_steps: 0
+  num_training_steps: 300
+
+interval: 5
+
+eval:
+  k: 10
