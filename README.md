@@ -14,6 +14,8 @@ conda create -n imvr python=3.8
 conda activate imvr
 pip install -r requirements.txt
 ```
+Then, install the [knn_search](model/knn_search/README.md) in `./model`.
+
 The code has been tested with Ubuntu 20.04, CUDA 11.7, Driver Version: 535.247.01, GeForce RTX 1080Ti, other platforms have not been tested but should work as well.
 
 ## Data Preparation
