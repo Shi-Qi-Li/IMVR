@@ -28,6 +28,4 @@ class Cache(Dataset):
         with open(pickle_path, 'rb') as f:
             data_batch = pickle.load(f)
 
-        data_batch["registration_overlap_ratio"] = data_batch["registration_overlap_ratio"] + np.eye(data_batch["registration_overlap_ratio"].shape[0], dtype=np.float32)
-
         return data_batch
